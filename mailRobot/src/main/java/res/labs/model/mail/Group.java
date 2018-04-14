@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * this group have a list of victim and one of them is the sender
+ * this group have a list of victim
  * @author Iando Rafidimalala
  * @author Yosra Harbaoui
  */
