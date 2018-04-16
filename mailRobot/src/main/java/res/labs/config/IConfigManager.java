@@ -17,4 +17,5 @@ public interface IConfigManager {
      * @throws IOException if reading file failed
      */
     void load (File conf) throws IOException;
+    
 }

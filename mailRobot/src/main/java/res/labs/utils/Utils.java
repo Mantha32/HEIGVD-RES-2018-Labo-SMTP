@@ -14,6 +14,8 @@ import java.io.Reader;
 public class Utils {
   static final String COMMAND_DELIMITER = "\r\n";
   static final String DATA_DELIMITER = "\r\n.\r\n";
+  static final char CSV_SEPARATOR = ','; 
+  static final String MSG_SEPARATOR = "====";
   
   private Utils() {
   }
