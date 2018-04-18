@@ -11,15 +11,13 @@ import java.io.Reader;
  * @author Yosra Harbaoui
  */
 
-public class Utils {
-  static final String COMMAND_DELIMITER = "\r\n";
-  static final String DATA_DELIMITER = "\r\n.\r\n";
-  static final char CSV_SEPARATOR = ','; 
-  static final String MSG_SEPARATOR = "====";
+public class Utility {
+  public static final String COMMAND_DELIMITER = "\r\n";
+  public static final String DATA_DELIMITER = "\r\n.\r\n";
+  public static final char CSV_SEPARATOR = ','; 
+  public static final String MSG_SEPARATOR = "====";
   
-  private Utils() {
-  }
-  
+ 
   /**
    * Reads predefined amount of characters from the provided reader
    *
@@ -29,7 +27,7 @@ public class Utils {
    *         contain less characters than requested (down to 0), if end of stream was reached.
    * @throws IOException
    */
-  static String read(final Reader in, final int length) throws IOException {
+  public static String read(final Reader in, final int length) throws IOException {
     if (length <= 0 || in == null) {
       return "";
     }
@@ -56,7 +54,7 @@ public class Utils {
    *         stream was reached
    * @throws IOException
    */
-  static String read(final Reader in, final String end) throws IOException {
+  public static String read(final Reader in, final String end) throws IOException {
     if (!in.markSupported()) {
       throw new IllegalArgumentException("mark/reset must be supported by provided reader");
     }
@@ -87,7 +85,7 @@ public class Utils {
    }
 
   
-  static String readAll(final Reader reader) throws IOException {
+  public static String readAll(final Reader reader) throws IOException {
     final StringBuilder sb = new StringBuilder();
 
     int c;
@@ -98,7 +96,7 @@ public class Utils {
     return sb.toString();
   }
 
-  static int toInt(final String s) {
+  public static int toInt(final String s) {
     try {
       return Integer.parseInt(s);
     } catch (NumberFormatException e) {

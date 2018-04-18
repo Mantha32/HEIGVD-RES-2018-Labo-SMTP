@@ -1,6 +1,4 @@
 
-package res.labs.mailrobot;
-
 import java.io.File;
 import java.io.IOException;
 import static java.lang.System.exit;
@@ -14,7 +12,10 @@ import res.labs.config.ConfigManager;
  * @author Iando Rafidimalala
  * @author Yosra Harbaoui
  */
-public class MailRobot {
+
+public class NewClass {
+  
+
     public static void main(String[] args) throws IOException{
         if (args.length <= 1){
             System.err.println("The directory path for config is missing as argument!");
@@ -31,3 +32,4 @@ public class MailRobot {
         
     }
 }
+  
