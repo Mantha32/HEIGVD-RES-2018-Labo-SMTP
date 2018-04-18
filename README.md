@@ -6,7 +6,7 @@ It is a Java application to communicate with an SMTP server using Socket API.
 It sends forged mails to a group of persons (victims). The list of victims and the messages to send are defined in external files.
 Each group contains one sender and the leftover is the recipient. 
 
-## Instruction
+## Instructions
 This project is a **IDEA Project**.
 
 The user will be able to send forged e-mails to a **group of victims**. The list of victims' e-mails can be modified in `victims.txt`file and the messages to send in `messages.txt` file.
@@ -21,7 +21,7 @@ In order to run it, all you have to do is to run these scripts: docker-build.sh 
 ### Real SMTP Server
 If you are sure to not to spam your SMTP Server, you can just change the `config.proprieties`. It  contains the **server address** and the **SMTP port**.
 
-### How to configure our tool 
+## Configuration
 There are three files to configure: 
 * `victims.txt` : the list of persons (e-mails) 
 * `messages.txt` : the list of messages to be sent to the victims. 
