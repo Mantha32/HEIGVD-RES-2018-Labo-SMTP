@@ -1,5 +1,7 @@
 package model.mail;
 
+import protocol.SmtpPartialProtocol;
+import utilities.Utility;
 /**
  * The Message class to define the features of a message to be sent.
  * @author Yosra Harbaoui
@@ -60,5 +62,45 @@ public class Message {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    private void addLine(StringBuilder sb, String property, String[] people){
+        if((sb != null) && !property.isEmpty() && (people.length != 0)){
+            sb.append(property);
+
+            //Add first person
+            sb.append(people[0]);
+
+            for (int i = 1; i < people.length; i++){
+                sb.append(", ");
+                sb.append(people[i]);
+            }
+
+            sb.append(Utility.COMMAND_DELIMITER);
+
+        }
+
+    }
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder("From:");
+        sb.append(from);
+        sb.append(Utility.COMMAND_DELIMITER);
+
+        addLine(sb, "To:", to);
+        addLine(sb,"Cc:", cc);
+
+        if(subject != null && !subject.equals("")) {
+            sb.append("Subject:");
+            sb.append(subject);
+            sb.append(Utility.COMMAND_DELIMITER);
+            sb.append(Utility.COMMAND_DELIMITER);
+        }
+
+        sb.append(body);
+        sb.append(Utility.DATA_DELIMITER);
+
+        return sb.toString();
+
     }
 }
