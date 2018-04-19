@@ -7,6 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * The manager to configure the application : the list of victims, the list of messages to send and for what SMTP server
+ * date is sent.
+ * @author Yosra Harbaoui
+ * @author Iando Rafidimalala
+ */
+
 public class ConfigurationManager implements IConfigurationManager {
     private String smtpServerAddress;
     private int smtpServerPort;

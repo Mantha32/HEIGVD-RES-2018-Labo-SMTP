@@ -1,4 +1,13 @@
 package model.mail;
+import java.util.regex.Pattern;
+
+/**
+ * The Person class to identify a victim
+ * Note: If you are using a different format of e-mail address, you have to adapt this class to use the format you configure
+ * @author Yosra Harbaoui
+ * @author Iando Rafidimalala
+ */
+
 
 public class Person {
     private String firstName;
@@ -12,8 +21,14 @@ public class Person {
     }
 
     public Person(String address) {
-        //TODO extract first and last name from email
         this.address = address;
+        if (this.address.contains(".")) {
+            String[] token = this.address.replace("@heig-vd.ch", "").split("\\.");
+            this.firstName = token[0];
+            this.lastName = token[1];
+        } else {
+            throw new IllegalArgumentException("String " + this.getAddress() + " does not contain .");
+        }
     }
 
     public String getFirstName() {
@@ -27,4 +42,5 @@ public class Person {
     public String getAddress() {
         return address;
     }
+
 }

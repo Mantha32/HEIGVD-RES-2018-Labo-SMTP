@@ -8,6 +8,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * The class to generate the Prank
+ * @author Yosra Harbaoui
+ * @author Iando Rafidimalala
+ */
+
 public class PrankGenerator {
     private IConfigurationManager configurationManager;
 
@@ -16,7 +22,6 @@ public class PrankGenerator {
     }
 
     public List<Prank> generatePranks() {
-        //TODO EXACTEMENT COMME DANS LA VIDEO
         List<Prank> pranks = new ArrayList<>();
 
         List<String> messages = configurationManager.getMessages();

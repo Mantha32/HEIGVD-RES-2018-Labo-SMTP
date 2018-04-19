@@ -7,6 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The Prank class
+ * @author Yosra Harbaoui
+ * @author Iando Rafidimalala
+ */
+
 public class Prank {
     private Person victimSender;
     private final List<Person> victimRecipients = new ArrayList<>();
@@ -48,11 +54,11 @@ public class Prank {
     public Message generateMessage() {
         Message msg = new Message();
 
-        //if using MockMock server use this line
-       msg.setBody(this.message + "\r\n" + victimSender.getFirstName() + " " + victimSender.getLastName());
+        //if you want to have a signuture to your mail you can use this line
+       //msg.setBody(this.message + "\r\n" + victimSender.getFirstName() + " " + victimSender.getLastName());
 
-        //if using school smtp server use this line
-       // msg.setBody(this.message);
+        //otherwise, you can use this one
+        msg.setBody(this.message);
 
         String[] to = victimRecipients
                 .stream()

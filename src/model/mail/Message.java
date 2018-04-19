@@ -1,5 +1,11 @@
 package model.mail;
 
+/**
+ * The Message class to define the features of a message to be sent.
+ * @author Yosra Harbaoui
+ * @author Iando Rafidimalala
+ */
+
 public class Message {
     private String from = "";
     private String[] to = new String[0];

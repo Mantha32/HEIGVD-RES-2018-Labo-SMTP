@@ -1,3 +1,4 @@
+
 import config.ConfigurationManager;
 import model.prank.Prank;
 import model.prank.PrankGenerator;
@@ -7,6 +8,12 @@ import java.io.IOException;
 import java.util.List;
 
 import static java.lang.System.exit;
+
+/**
+ * The main class of the application
+ * @author Yosra Harbaoui
+ * @author Iando Rafidimalala
+ */
 
 public class Main {
     public static void main(String[] args) {
