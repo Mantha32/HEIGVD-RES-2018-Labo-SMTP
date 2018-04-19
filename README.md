@@ -1,49 +1,35 @@
 # HEIGVD-RES-2018-Labo-SMTP
 
 ## The project description 
-This project is made for RES course at HES-SO University of Applied Sciences Western Switzerland.
-we are intending for implementing SMTP client side. This project uses a partial implementation of the SMTP protocol. 
-It allows you to send mail per group that you can costumize the message and the umber group itself.
-Each group contains one sender and the leftover is the recipient. This application automatize the process.
+This project is an application designed for RES course at HES-SO University of Applied Sciences Western Switzerland.
+It is a Java application to communicate with an SMTP server using Socket API. 
+It sends forged mails to a group of persons (victims). The list of victims and the messages to send are defined in external files.
+Each group contains one sender and the leftover is the recipient. 
 
-## set up a mock SMTP server with Docker
-### Instruction
+## Instructions
+This project is a **IDEA Project**.
 
+The user will be able to send forged e-mails to a **group of victims**. The list of victims' e-mails can be modified in `victims.txt`file and the messages to send in `messages.txt` file.
 
-## How to configure our tool 
+E-mails can be sent either using a **MockMock server** (for tests) or a real **SMTP server**.
 
-## How to run a prank campaign
+#### MockMock Server
+If you want to test the application before sending real mails, you can use [mockmok](https://github.com/dc55028/MockMock).
+To run the `MockMock Server`, you can follow the instruction on below. Therefore, we have prepared a [docker](https://www.docker.com/) image.
+In order to run it, all you have to do is to run these scripts: docker-build.sh and docker-run.sh
 
+### Real SMTP Server
+If you are sure to not to spam your SMTP Server, you can just change the `config.proprieties`. It  contains the **server address** and the **SMTP port**.
 
-## Implmentation description of the client side
-### Set up the client side using the configuration file
+## Configuration
+There are three files to configure: 
+* `victims.txt` : the list of persons (e-mails) 
+* `messages.txt` : the list of messages to be sent to the victims. 
+* `config.proprieties` : the configuration of the SMTP Server (`server address` , `SMTP Pott`, `number of groups` and `CC reciver`)
 
-### Protocol based on SMTP protocol
+## Installation
+* Clone this repos.
+* Run the **MockMock server**.
+* Run the application after modifing files listing above. 
 
-### The smtp message repsonse server handler
-
-### the mail message
-
-### The main class smtp client
-
-
-
-
-
-
-
-### comdande utilisé pour l'initialisation connexion
-Dans l'ordre
-#### Protocole TCP 
--  EHLO nom --> nomd du domaine
--  MAIL FROM: source venir d'une certain pers , pas verifier --> SMTP command
--  RCPT TO: destinataire, !! adresse de la destinataire, == une personne reçoit le message
-
--  DATA : les données, corps du messages ou il n'y pas de contrôle
-From: mail@gmial.com
-To: destinataire@gmail.com
-Subject: blabla
-
-
-Envoyer le username et mot de passe en base 64!!
-coder en base 64  un char: en ligne de commande: echo -n 'monmessage' | base64
+Now you are able to send e-mails to the group of victims. The sender will be chosen randmoly.
