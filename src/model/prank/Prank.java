@@ -55,10 +55,10 @@ public class Prank {
         Message msg = new Message();
 
         //if you want to have a signuture to your mail you can use this line
-       //msg.setBody(this.message + "\r\n" + victimSender.getFirstName() + " " + victimSender.getLastName());
+       msg.setBody(this.message + "\r\n" + victimSender.getFirstName() + " " + victimSender.getLastName());
 
         //otherwise, you can use this one
-        msg.setBody(this.message);
+        //msg.setBody(this.message);
 
         String[] to = victimRecipients
                 .stream()
