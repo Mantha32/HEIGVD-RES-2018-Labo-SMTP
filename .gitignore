@@ -13,13 +13,16 @@ release.properties
 .idea/dictionaries
 
 # Sensitive or high-churn files:
-.idea/**/dataSources/
-.idea/**/dataSources.ids
-.idea/**/dataSources.local.xml
-.idea/**/sqlDataSources.xml
-.idea/**/dynamic.xml
-.idea/**/uiDesigner.xml
-.idea/**/workspace.xml
+.idea/compiler.xml
+.idea/dbnavigator.xml
+.idea/encodings.xml
+.idea/kotlink.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/workspace.xml
+.idea/uiDesigner.xml
+.idea/vcs.xml
+
 
 # CMake
 cmake-build-debug/
