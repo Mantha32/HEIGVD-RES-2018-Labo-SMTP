@@ -18,15 +18,16 @@ import static java.lang.System.exit;
 public class Main {
     public static void main(String[] args) {
         ConfigurationManager configurationManager = null;
-
+        SmtpClient smtpClient = null;
         try {
             configurationManager = new ConfigurationManager();
+            smtpClient = new SmtpClient(configurationManager.getSmtpServerAddress(), configurationManager.getSmtpServerPort());
         } catch (IOException e) {
             e.printStackTrace();
             exit(1);
         }
 
-        SmtpClient smtpClient = new SmtpClient(configurationManager.getSmtpServerAddress(), configurationManager.getSmtpServerPort());
+
 
         PrankGenerator prankGenerator = new PrankGenerator(configurationManager);
 
