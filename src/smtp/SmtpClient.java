@@ -1,6 +1,8 @@
 package smtp;
 
 import model.mail.Message;
+import protocol.*;
+import utilities.Utility;
 
 import java.io.*;
 import java.net.Socket;
@@ -13,21 +15,98 @@ public class SmtpClient implements ISmtpClient {
     private DataOutputStream writer = null;
     private BufferedReader reader = null;
 
-    public SmtpClient(String smtpServerAddress, int smtpServerPort) {
+    public SmtpClient(String smtpServerAddress, int smtpServerPort) throws IOException {
         this.smtpServerAddress = smtpServerAddress;
         this.smtpServerPort = smtpServerPort;
+
+
+    }
+
+    /**
+     * get the code in the server response
+     * We are looking for this pattern <XXX>[ ] message stands for xxx is the code.
+     * @return integer code XXX
+     * @throws IOException
+     */
+    private int getResponseServerCode() throws IOException{
+
+        String response;
+
+        do{
+            response = reader.readLine();
+
+        }while(response.charAt(3) != ' ');
+
+        return Utility.toInt(response.substring(0, 3));
+    }
+
+    /**
+     * Send the SMTP command and a message with it
+     * Check out if the command send successfully with the server response
+     * @param cmd SMTP command
+     * @param values message append to command
+     */
+    private boolean sendCommand(String cmd, String values) throws IOException{
+
+        //Check the server connexion before the process
+        if (!isConnected()){
+            throw new IOException("client is not connected");
+        }
+
+        writer.writeBytes(cmd);
+        writer.writeBytes(" ");
+        writer.writeBytes(values);
+        writer.writeBytes(Utility.COMMAND_DELIMITER);
+        writer.flush();
+
+        return ServerResponseCode.CODE_REQUEST_OK == getResponseServerCode();
+    }
+
+    /**
+     * send SMTP command without message
+     * @param cmd
+     */
+    private boolean sendCommand(String cmd) throws IOException{
+        return sendCommand(cmd, "");
     }
 
     @Override
-    public void sendMessage(Message message) throws IOException {
+    public void connect(String smtpServerAddress, int smtpServerPort) throws IOException {
         socket = new Socket(smtpServerAddress, smtpServerPort);
 
         writer = new DataOutputStream(socket.getOutputStream());
         reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
 
+    }
+    @Override
+    public boolean isConnected() {
+
+        if(socket == null || socket.isClosed())
+            return false;
+
+        return socket.isConnected();
+    }
+
+    @Override
+    public void disconnect() throws IOException {
+        if(isConnected() && sendCommand(SmtpPartialProtocol.CMD_QUIT)){
+            writer.flush();
+            reader.close();
+            writer.close();
+            socket.close();
+        }
+
+    }
+
+    @Override
+    public void sendMessage(Message message) throws IOException {
+
+        connect(smtpServerAddress, smtpServerPort);
+
         String line = reader.readLine();
 
-        writer.writeBytes("EHLO localhost\r\n");
+        //sendCommand(SmtpPartialProtocol.CMD_EHLO, "pranck");
+        writer.writeBytes("EHLO Pranck\r\n");
 
         line = reader.readLine();
 
@@ -35,57 +114,20 @@ public class SmtpClient implements ISmtpClient {
             line = reader.readLine();
         }
 
-        writer.writeBytes("MAIL FROM:");
-        writer.writeBytes(message.getFrom());
-        writer.writeBytes("\r\n");
-        writer.flush();
+        sendCommand(SmtpPartialProtocol.CMD_MAIL_FROM, message.getFrom());
 
         for (String to : message.getTo()) {
-            writer.writeBytes("RCPT TO:");
-            writer.writeBytes(to);
-            writer.writeBytes("\r\n");
-            writer.flush();
+            sendCommand(SmtpPartialProtocol.CMD_RCPT_TO, to);
         }
 
         for (String cc : message.getCc()) {
-            writer.writeBytes("RCPT TO:");
-            writer.writeBytes(cc);
-            writer.writeBytes("\r\n");
-            writer.flush();
+            sendCommand(SmtpPartialProtocol.CMD_RCPT_TO, cc);
         }
 
-        writer.writeBytes("DATA");
-        writer.writeBytes("\r\n");
-        writer.flush();
+        sendCommand(SmtpPartialProtocol.CMD_DATA);
 
-        //writer.writeBytes("Content-Type: text-plain; charset=\"utf-8\"\r\n");
-        writer.writeBytes("From:" + message.getFrom() + "\r\n");
 
-        writer.writeBytes("To:" + message.getTo()[0]);
-        for (int i = 1; i < message.getTo().length; ++i) {
-            writer.writeBytes(", " + message.getTo()[i]);
-        }
-        writer.writeBytes("\r\n");
-
-        writer.writeBytes("Cc:" + message.getCc()[0]);
-        for (int i = 1; i < message.getCc().length; ++i) {
-            writer.writeBytes(", " + message.getCc()[i]);
-        }
-        writer.writeBytes("\r\n");
-
-        String subject = message.getSubject();
-        if(subject != null && !subject.equals("")) {
-            writer.writeBytes("Subject:" + subject);
-            writer.writeBytes("\r\n");
-            writer.writeBytes("\r\n");
-        }
-
-        writer.flush();
-
-        writer.writeBytes(message.getBody());
-        writer.writeBytes("\r\n");
-        writer.writeBytes(".");
-        writer.writeBytes("\r\n");
+        writer.writeBytes(message.toString());
         writer.flush();
 
     //TODO CHECK WITH A TIMER TO AVOID INFINITE LOOP
@@ -97,10 +139,6 @@ public class SmtpClient implements ISmtpClient {
             }
         }
 
-        writer.writeBytes("QUIT\r\n");
-        writer.flush();
-        reader.close();
-        writer.close();
-        socket.close();
+        disconnect();
     }
 }
