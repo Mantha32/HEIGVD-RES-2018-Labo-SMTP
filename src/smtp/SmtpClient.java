@@ -19,7 +19,7 @@ public class SmtpClient implements ISmtpClient {
         this.smtpServerAddress = smtpServerAddress;
         this.smtpServerPort = smtpServerPort;
 
-        connect(smtpServerAddress, smtpServerPort);
+
     }
 
     /**
@@ -101,6 +101,7 @@ public class SmtpClient implements ISmtpClient {
     @Override
     public void sendMessage(Message message) throws IOException {
 
+        connect(smtpServerAddress, smtpServerPort);
 
         String line = reader.readLine();
 
